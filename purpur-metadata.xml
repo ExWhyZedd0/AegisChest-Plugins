@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>org.purpurmc.purpur</groupId>
+  <artifactId>purpur-api</artifactId>
+  <versioning>
+    <latest>26.2.build.2611-stable</latest>
+    <release>26.2.build.2611-stable</release>
+    <versions>
+      <version>26.1.2.build.2583-stable</version>
+      <version>26.1.2.build.2584-stable</version>
+      <version>26.1.2.build.2585-stable</version>
+      <version>26.1.2.build.2586-stable</version>
+      <version>26.1.2.build.2587-stable</version>
+      <version>26.1.2.build.2588-stable</version>
+      <version>26.1.2.build.2589-stable</version>
+      <version>26.1.2.build.2590-stable</version>
+      <version>26.1.2.build.2591-stable</version>
+      <version>26.1.2.build.2592-stable</version>
+      <version>26.2.build.2593-experimental</version>
+      <version>26.2.build.2594-experimental</version>
+      <version>26.2.build.2595-experimental</version>
+      <version>26.2.build.2596-experimental</version>
+      <version>26.2.build.2597-experimental</version>
+      <version>26.2.build.2598-experimental</version>
+      <version>26.2.build.2600-experimental</version>
+      <version>26.2.build.2601-experimental</version>
+      <version>26.2.build.2602-experimental</version>
+      <version>26.2.build.2603-experimental</version>
+      <version>26.2.build.2604-experimental</version>
+      <version>26.2.build.2605-experimental</version>
+      <version>26.2.build.2606-experimental</version>
+      <version>26.2.build.2607-experimental</version>
+      <version>26.2.build.2608-stable</version>
+      <version>26.2.build.2609-stable</version>
+      <version>26.2.build.2610-stable</version>
+      <version>26.2.build.2611-stable</version>
+    </versions>
+    <lastUpdated>20260719171159</lastUpdated>
+  </versioning>
+</metadata>

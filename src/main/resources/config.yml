@@ -1,0 +1,26 @@
+# AegisChest Configuration
+# This is a lightweight version of the configuration.
+# We will incrementally add features here in the future if requested.
+
+# Log when players fetch their chests
+log-fetches: true
+
+# aegischest-duration: The time in seconds before an AegisChest expires.
+aegischest-duration: 600
+
+# marker-type: The block type to use as the chest marker. 
+# Defaults to PLAYER_HEAD (drops dying player's head). Can also be CHEST.
+marker-type: PLAYER_HEAD
+
+# Customizable messages
+messages:
+  chest-collected: "&aAegisChest successfully collected!"
+  not-owner: "&cYou cannot interact with another player's AegisChest!"
+  fetch-usage: "&eUsage: /aegischest fetch or /aegischest list"
+  fetch-multiple: "&eYou have multiple active chests. Usage: /aegischest fetch <id>"
+  invalid-id: "&cCould not find a chest with that ID."
+  chest-broken: "&cYour AegisChest could not be found. It may have been broken."
+  teleported: "&aYour AegisChest has been teleported to you at X: %x%, Y: %y%, Z: %z%."
+  death-message: "&eAn Aegis has collected your stuff! You can fetch your chest using /aegischest fetch %id%"
+  list-header: "&6=== Your AegisChests ==="
+  list-item: "&eID: %id% | &7Loc: %x%, %y%, %z% | &cTime: %time%"

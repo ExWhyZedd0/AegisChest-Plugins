@@ -1,0 +1,2 @@
+Command: C:\Users\felix\.antigravity-ide\extensions\redhat.java-1.55.0-win32-x64\jre\21.0.11-win32-x86_64\bin\java.exe -Dpaperclip.patchonly=true -classpath C:\Users\felix\OneDrive\Documents\Angel chest project\.gradle\caches\paperweight\setupCache\extractDevBundle.dir\data\paperclip-mojang+yarn.jar io.papermc.paperclip.Main
+Applying patches
