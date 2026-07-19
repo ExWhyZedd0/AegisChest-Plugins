@@ -63,4 +63,4 @@ cd AegisChest
 The compiled JAR will be located in `build/libs/`.
 
 ## 📄 License
-This project is open-source and available for customization. (Add your chosen license here).
+This project is open-source and available for customization.
