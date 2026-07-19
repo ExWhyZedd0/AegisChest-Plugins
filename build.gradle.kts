@@ -4,12 +4,12 @@ plugins {
 
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(25))
+        languageVersion.set(JavaLanguageVersion.of(17))
     }
 }
 
 group = "com.example.aegischest"
-version = "1.0.0-26.2"
+version = "1.0.0"
 
 repositories {
     mavenCentral()
@@ -18,10 +18,10 @@ repositories {
 }
 
 dependencies {
-    compileOnly("org.purpurmc.purpur:purpur-api:26.2.build.2611-stable")
+    compileOnly("io.papermc.paper:paper-api:1.19.4-R0.1-SNAPSHOT")
 }
 
 tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
-    options.release.set(25) // Updating to 25 for modern Java / Purpur 26.2
+    options.release.set(17) // Use Java 17 for better backward compatibility
 }
