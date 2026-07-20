@@ -23,6 +23,7 @@ import java.util.UUID;
 public class AegisChestPlugin extends JavaPlugin {
 
     private final Map<UUID, List<AegisChestData>> activeChests = new HashMap<>();
+    private final Map<UUID, List<AegisChestData>> expiredChests = new HashMap<>();
     private NamespacedKey ownerKey;
     private NamespacedKey xpKey;
     private NamespacedKey idKey;
@@ -39,8 +40,8 @@ public class AegisChestPlugin extends JavaPlugin {
         storageManager = new StorageManager(this);
         storageManager.loadChests();
 
-        // Load duration in seconds from config, default 600
-        int durationSeconds = getConfig().getInt("aegischest-duration", 600);
+        // Load duration in seconds from config, default 3600 (1 hour)
+        int durationSeconds = getConfig().getInt("aegischest-duration", 3600);
         this.chestDurationMillis = durationSeconds * 1000L;
 
         this.ownerKey = new NamespacedKey(this, "aegischest_owner");
@@ -76,14 +77,9 @@ public class AegisChestPlugin extends JavaPlugin {
                             block.setType(Material.AIR);
                         }
                         
-                        // Drop virtual contents
-                        if (chestData.getItems() != null) {
-                            for (ItemStack item : chestData.getItems()) {
-                                if (item != null && item.getType() != Material.AIR) {
-                                    block.getWorld().dropItemNaturally(block.getLocation(), item);
-                                }
-                            }
-                        }
+                        // Add to expired chests map
+                        List<AegisChestData> expList = expiredChests.computeIfAbsent(chestData.getOwner(), k -> new ArrayList<>());
+                        expList.add(chestData);
                         return true;
                     }
                     
@@ -115,6 +111,10 @@ public class AegisChestPlugin extends JavaPlugin {
 
     public Map<UUID, List<AegisChestData>> getActiveChests() {
         return activeChests;
+    }
+
+    public Map<UUID, List<AegisChestData>> getExpiredChests() {
+        return expiredChests;
     }
 
     public NamespacedKey getOwnerKey() {

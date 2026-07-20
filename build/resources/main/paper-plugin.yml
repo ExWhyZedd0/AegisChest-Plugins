@@ -1,5 +1,5 @@
 name: AegisChest
-version: '1.0.0'
+version: '1.0.1'
 main: com.example.aegischest.AegisChestPlugin
 api-version: '1.20'
 description: Prevents item despawning by saving them in a protected chest upon death.

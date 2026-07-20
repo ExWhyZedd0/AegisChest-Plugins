@@ -5,8 +5,8 @@
 # Log when players fetch their chests
 log-fetches: true
 
-# aegischest-duration: The time in seconds before an AegisChest expires.
-aegischest-duration: 600
+# aegischest-duration: The time in seconds before an AegisChest expires. Default is 3600 (1 hour).
+aegischest-duration: 3600
 
 # marker-type: The block type to use as the chest marker. 
 # Defaults to PLAYER_HEAD (drops dying player's head). Can also be CHEST.

@@ -75,6 +75,7 @@ public class DeathListener implements Listener {
             as.setMarker(true);
             as.setCustomNameVisible(true);
             as.setGravity(false);
+            as.setPersistent(false);
             as.customName(net.kyori.adventure.text.Component.text(player.getName() + "'s AegisChest", net.kyori.adventure.text.format.NamedTextColor.GOLD));
         });
 
@@ -85,6 +86,7 @@ public class DeathListener implements Listener {
             as.setMarker(true);
             as.setCustomNameVisible(true);
             as.setGravity(false);
+            as.setPersistent(false);
         });
 
         long expireTime = System.currentTimeMillis() + plugin.getChestDurationMillis();

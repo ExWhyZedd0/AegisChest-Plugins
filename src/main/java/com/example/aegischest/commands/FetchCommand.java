@@ -43,6 +43,9 @@ public class FetchCommand extends Command {
             } else if (args[0].equalsIgnoreCase("list")) {
                 handleList(player);
                 return true;
+            } else if (args[0].equalsIgnoreCase("recover")) {
+                handleRecover(player, args);
+                return true;
             }
         }
         
@@ -175,6 +178,58 @@ public class FetchCommand extends Command {
         ));
         
         plugin.getLogger().info("Player " + player.getName() + " fetched their AegisChest to X: " + newBlock.getX() + ", Y: " + newBlock.getY() + ", Z: " + newBlock.getZ());
+    }
+
+    private void handleRecover(Player admin, String[] args) {
+        if (!admin.hasPermission("aegischest.admin") && !admin.isOp()) {
+            admin.sendMessage(Component.text("You do not have permission to use this command.", NamedTextColor.RED));
+            return;
+        }
+
+        if (args.length < 2) {
+            admin.sendMessage(Component.text("Usage: /ac recover <player>", NamedTextColor.RED));
+            return;
+        }
+
+        String targetName = args[1];
+        java.util.List<com.example.aegischest.AegisChestData> foundChests = null;
+        UUID targetUuid = null;
+
+        for (java.util.Map.Entry<UUID, java.util.List<com.example.aegischest.AegisChestData>> entry : plugin.getExpiredChests().entrySet()) {
+            if (!entry.getValue().isEmpty()) {
+                if (entry.getValue().get(0).getOwnerName().equalsIgnoreCase(targetName)) {
+                    foundChests = entry.getValue();
+                    targetUuid = entry.getKey();
+                    break;
+                }
+            }
+        }
+
+        if (foundChests == null || foundChests.isEmpty()) {
+            admin.sendMessage(Component.text("No expired chests found for player: " + targetName, NamedTextColor.RED));
+            return;
+        }
+
+        // Recover all expired chests for this player
+        int recoveredCount = 0;
+        for (com.example.aegischest.AegisChestData chest : foundChests) {
+            if (chest.getItems() != null) {
+                for (ItemStack item : chest.getItems()) {
+                    if (item != null && item.getType() != Material.AIR) {
+                        admin.getWorld().dropItemNaturally(admin.getLocation(), item);
+                    }
+                }
+            }
+            if (chest.getXp() > 0) {
+                admin.giveExp(chest.getXp());
+            }
+            recoveredCount++;
+        }
+
+        // Clear the expired chests for this player
+        plugin.getExpiredChests().remove(targetUuid);
+
+        admin.sendMessage(Component.text("Successfully recovered " + recoveredCount + " expired chest(s) for " + targetName + ". Items have been dropped at your feet.", NamedTextColor.GREEN));
     }
 
     private Block findSafeBlock(Location startLoc) {
