@@ -56,24 +56,22 @@ public class StorageManager {
 
                     // Respawn hologram (name layer)
                     Location nameHoloLoc = loc.clone().add(0.5, 1.2, 0.5);
-                    org.bukkit.entity.ArmorStand nameHologram = world.spawn(nameHoloLoc, org.bukkit.entity.ArmorStand.class, as -> {
-                        as.setInvisible(true);
-                        as.setMarker(true);
-                        as.setCustomNameVisible(true);
-                        as.setGravity(false);
-                        as.setPersistent(false);
-                        as.customName(net.kyori.adventure.text.Component.text(ownerName + "'s AegisChest", net.kyori.adventure.text.format.NamedTextColor.GOLD));
-                    });
+                    org.bukkit.entity.ArmorStand nameHologram = world.spawn(nameHoloLoc, org.bukkit.entity.ArmorStand.class);
+                    nameHologram.setInvisible(true);
+                    nameHologram.setMarker(true);
+                    nameHologram.setCustomNameVisible(true);
+                    nameHologram.setGravity(false);
+                    nameHologram.setPersistent(false);
+                    nameHologram.customName(net.kyori.adventure.text.Component.text(ownerName + "'s AegisChest", net.kyori.adventure.text.format.NamedTextColor.GOLD));
 
                     // Respawn hologram (timer layer)
                     Location timerHoloLoc = loc.clone().add(0.5, 1.5, 0.5);
-                    org.bukkit.entity.ArmorStand timerHologram = world.spawn(timerHoloLoc, org.bukkit.entity.ArmorStand.class, as -> {
-                        as.setInvisible(true);
-                        as.setMarker(true);
-                        as.setCustomNameVisible(true);
-                        as.setGravity(false);
-                        as.setPersistent(false);
-                    });
+                    org.bukkit.entity.ArmorStand timerHologram = world.spawn(timerHoloLoc, org.bukkit.entity.ArmorStand.class);
+                    timerHologram.setInvisible(true);
+                    timerHologram.setMarker(true);
+                    timerHologram.setCustomNameVisible(true);
+                    timerHologram.setGravity(false);
+                    timerHologram.setPersistent(false);
 
                     AegisChestData chest = new AegisChestData(chestId, ownerUuid, ownerName, loc, expireTime, timerHologram, nameHologram, items, xp);
                     playerChests.add(chest);

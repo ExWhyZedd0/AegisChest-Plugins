@@ -3,6 +3,7 @@
 ## Version 1.0.1
 
 ### 🐛 Bug Fixes
+* **Death Registration Fallback (Hotfix):** Fixed a critical error where if Hologram generation was blocked by another plugin (like WorldGuard) or an API exception occurred during death, the player's items would be permanently swallowed. Items will now drop safely on the ground naturally if a chest fails to spawn.
 * **Hologram Ghosting:** Fixed a critical bug where AegisChest holograms (name and timer) would become permanently stuck floating in the world if the server restarted before the chest expired. Holograms are now properly flagged as non-persistent and will always clean themselves up.
 
 ### 🌟 New Features
