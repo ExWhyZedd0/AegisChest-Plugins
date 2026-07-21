@@ -8,15 +8,16 @@ AegisChest is a lightweight, reliable, and user-friendly PaperMC plugin that sav
 - **Holograms**: Spawns a two-layer hologram above the chest displaying the owner's name and a live, blue countdown timer.
 - **Timed Expiry**: AegisChests automatically expire after a configurable duration (default: 1 hour). If they expire, they are securely stored in an Admin Recovery Vault instead of despawning on the ground.
 - **Secure**: Other players cannot open, break, or interact with an AegisChest that doesn't belong to them (bypassed by server operators).
-- **Auto-Equip**: When an owner collects their AegisChest, armor is automatically equipped if the slots are empty, and XP is instantly restored.
-- **Fetch Command**: Players can safely fetch and teleport their AegisChests to themselves using a command.
+- **Advanced Auto-Equip**: When an owner collects their AegisChest, armor is automatically equipped (including Elytras, Shields, and Totems of Undying) if the slots are empty, and XP is instantly restored.
+- **Rewarding SFX**: Enjoy satisfying level-up and chest opening sound effects when you successfully collect your items.
+- **Fetch Command**: Players can safely fetch and teleport their AegisChests to themselves using a command (even across dimensions like the Nether to the Overworld!).
 - **Multiple Chests**: Supports multiple active chests per player.
 - **Highly Configurable**: Customize messages, chest duration, and the marker type (e.g., `PLAYER_HEAD` or `CHEST`) directly from the configuration file.
 - **Admin Recovery**: Recover expired chests with ease using `/ac recover <player>` so items are never truly lost to time.
 
-## 📦 Installation
+## 🚀 Installation
 
-1. Download the latest `AegisChest-1.0.1.jar` release.
+1. Download the latest `AegisChest-1.0.2.jar` release.
 2. Drop the `.jar` file into your server's `plugins/` directory.
 3. Restart your server.
 4. Customize the generated `config.yml` inside the `plugins/AegisChest/` folder to your liking.
@@ -49,7 +50,7 @@ messages:
 
 *Alias:* `/ac` can be used instead of `/aegischest`.
 
-## 📜 Permissions
+## 🔐 Permissions
 
 *Currently, AegisChest works out-of-the-box for all players. Server operators (OPs) have the bypass ability to open or break any AegisChest. Admins require `aegischest.admin` to use the `/ac recover` command.*
 

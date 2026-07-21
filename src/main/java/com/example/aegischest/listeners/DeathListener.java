@@ -44,7 +44,7 @@ public class DeathListener implements Listener {
             // Place a dummy chest visually based on config
             Block block = findSafeBlock(deathLoc);
             Material markerType = plugin.getConfigMessage().getMarkerType();
-            block.setType(markerType);
+            block.setType(markerType, false); // disable physics so it doesn't pop off mid-air
             
             if (markerType == Material.PLAYER_HEAD) {
                 if (block.getState() instanceof org.bukkit.block.Skull skull) {

@@ -97,6 +97,8 @@ public class ChestProtectionListener implements Listener {
             }
 
             player.sendMessage(plugin.getConfigMessage().getMessage("chest-collected"));
+            player.playSound(player.getLocation(), org.bukkit.Sound.ENTITY_PLAYER_LEVELUP, 0.5f, 1.0f);
+            player.playSound(player.getLocation(), org.bukkit.Sound.BLOCK_CHEST_OPEN, 0.5f, 1.0f);
         }
     }
 
@@ -114,7 +116,8 @@ public class ChestProtectionListener implements Listener {
     private boolean isArmor(org.bukkit.Material material) {
         String name = material.name();
         return name.endsWith("_HELMET") || name.endsWith("_CHESTPLATE") || 
-               name.endsWith("_LEGGINGS") || name.endsWith("_BOOTS");
+               name.endsWith("_LEGGINGS") || name.endsWith("_BOOTS") ||
+               name.equals("ELYTRA") || name.equals("SHIELD") || name.equals("TOTEM_OF_UNDYING");
     }
 
     private boolean autoEquipArmor(Player player, org.bukkit.inventory.ItemStack armor) {
@@ -125,7 +128,7 @@ public class ChestProtectionListener implements Listener {
             inv.setHelmet(armor);
             return true;
         }
-        if (name.endsWith("_CHESTPLATE") && inv.getChestplate() == null) {
+        if ((name.endsWith("_CHESTPLATE") || name.equals("ELYTRA")) && inv.getChestplate() == null) {
             inv.setChestplate(armor);
             return true;
         }
@@ -136,6 +139,12 @@ public class ChestProtectionListener implements Listener {
         if (name.endsWith("_BOOTS") && inv.getBoots() == null) {
             inv.setBoots(armor);
             return true;
+        }
+        if (name.equals("SHIELD") || name.equals("TOTEM_OF_UNDYING")) {
+            if (inv.getItemInOffHand().getType() == org.bukkit.Material.AIR) {
+                inv.setItemInOffHand(armor);
+                return true;
+            }
         }
         return false;
     }

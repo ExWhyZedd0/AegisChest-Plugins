@@ -1,5 +1,18 @@
 # AegisChest Changelog
 
+## Version 1.0.2
+
+### 🐛 Bug Fixes
+* **Cross-Version API Compatibility:** Fixed a `NoSuchMethodError` crash that occurred on PaperMC/Purpur 1.20+ servers when spawning holograms. The plugin now uses a version-agnostic spawning method, making it completely stable across 1.19, 1.20, and 1.21.
+* **Cross-Dimension Fetching:** Fixed a bug where fetching an AegisChest across dimensions (e.g., from the Nether to the Overworld) would cause its holograms to permanently disappear due to unloaded chunks.
+* **Floating Head Drops:** Disabled block physics when spawning an AegisChest via `/ac fetch`, preventing the `PLAYER_HEAD` from instantly popping off and dropping as an item if fetched into mid-air.
+
+### 🌟 New Features
+* **Expanded Auto-Equip:** When a player collects their chest, the plugin will now automatically equip Elytras (in the chestplate slot) and Shields/Totems of Undying (in the off-hand slot), in addition to standard armor.
+* **Collection Sound Effects:** Added satisfying "Level Up" and "Chest Open" sound effects that play when a player successfully opens and collects their AegisChest.
+
+---
+
 ## Version 1.0.1
 
 ### 🐛 Bug Fixes

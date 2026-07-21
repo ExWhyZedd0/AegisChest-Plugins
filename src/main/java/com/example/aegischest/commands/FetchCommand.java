@@ -149,7 +149,7 @@ public class FetchCommand extends Command {
 
         Block newBlock = findSafeBlock(newLoc);
         Material markerType = plugin.getConfigMessage().getMarkerType();
-        newBlock.setType(markerType);
+        newBlock.setType(markerType, false); // disable physics so it doesn't drop
         
         if (markerType == Material.PLAYER_HEAD) {
             if (newBlock.getState() instanceof org.bukkit.block.Skull skull) {
@@ -161,15 +161,32 @@ public class FetchCommand extends Command {
         // Update tracking data
         targetChest.setLocation(newBlock.getLocation());
         
-        // Teleport holograms
-        if (targetChest.getNameHologram() != null && targetChest.getNameHologram().isValid()) {
-            Location holoLoc = newBlock.getLocation().add(0.5, 1.2, 0.5);
-            targetChest.getNameHologram().teleport(holoLoc);
+        // Safely recreate holograms instead of teleporting across worlds
+        if (targetChest.getNameHologram() != null) {
+            targetChest.getNameHologram().remove();
         }
-        if (targetChest.getTimerHologram() != null && targetChest.getTimerHologram().isValid()) {
-            Location holoLoc = newBlock.getLocation().add(0.5, 1.5, 0.5);
-            targetChest.getTimerHologram().teleport(holoLoc);
+        if (targetChest.getTimerHologram() != null) {
+            targetChest.getTimerHologram().remove();
         }
+
+        Location holoNameLoc = newBlock.getLocation().add(0.5, 1.2, 0.5);
+        org.bukkit.entity.ArmorStand nameHolo = newBlock.getWorld().spawn(holoNameLoc, org.bukkit.entity.ArmorStand.class);
+        nameHolo.setInvisible(true);
+        nameHolo.setMarker(true);
+        nameHolo.setCustomNameVisible(true);
+        nameHolo.setGravity(false);
+        nameHolo.setPersistent(false);
+        nameHolo.customName(net.kyori.adventure.text.Component.text(targetChest.getOwnerName() + "'s AegisChest", net.kyori.adventure.text.format.NamedTextColor.GOLD));
+        targetChest.setNameHologram(nameHolo);
+
+        Location holoTimerLoc = newBlock.getLocation().add(0.5, 1.5, 0.5);
+        org.bukkit.entity.ArmorStand timerHolo = newBlock.getWorld().spawn(holoTimerLoc, org.bukkit.entity.ArmorStand.class);
+        timerHolo.setInvisible(true);
+        timerHolo.setMarker(true);
+        timerHolo.setCustomNameVisible(true);
+        timerHolo.setGravity(false);
+        timerHolo.setPersistent(false);
+        targetChest.setTimerHologram(timerHolo);
 
         player.sendMessage(plugin.getConfigMessage().getMessage("teleported", 
             "x", String.valueOf(newBlock.getX()),
