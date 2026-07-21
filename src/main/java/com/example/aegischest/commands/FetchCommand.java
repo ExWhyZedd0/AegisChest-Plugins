@@ -231,7 +231,8 @@ public class FetchCommand extends Command {
         int recoveredCount = 0;
         for (com.example.aegischest.AegisChestData chest : foundChests) {
             if (chest.getItems() != null) {
-                for (ItemStack item : chest.getItems()) {
+                for (int i = 0; i < chest.getItems().length; i++) {
+                    ItemStack item = chest.getItems()[i];
                     if (item != null && item.getType() != Material.AIR) {
                         admin.getWorld().dropItemNaturally(admin.getLocation(), item);
                     }

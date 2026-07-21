@@ -26,12 +26,51 @@ public class DeathListener implements Listener {
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event) {
-        List<ItemStack> drops = new java.util.ArrayList<>(event.getDrops());
-        if (drops.isEmpty()) {
+        List<ItemStack> initialDrops = new java.util.ArrayList<>(event.getDrops());
+        if (initialDrops.isEmpty()) {
             return;
         }
 
         Player player = event.getEntity();
+        ItemStack[] rawContents = player.getInventory().getContents();
+        ItemStack[] savedContents = new ItemStack[Math.max(41, rawContents.length)];
+        
+        for (int i = 0; i < rawContents.length; i++) {
+            ItemStack invItem = rawContents[i];
+            if (invItem != null && invItem.getType() != Material.AIR) {
+                for (int j = 0; j < initialDrops.size(); j++) {
+                    if (initialDrops.get(j).isSimilar(invItem)) {
+                        int dropAmount = initialDrops.get(j).getAmount();
+                        int invAmount = invItem.getAmount();
+                        if (dropAmount >= invAmount) {
+                            savedContents[i] = invItem.clone();
+                            initialDrops.get(j).setAmount(dropAmount - invAmount);
+                            if (initialDrops.get(j).getAmount() <= 0) {
+                                initialDrops.remove(j);
+                            }
+                            break;
+                        } else if (dropAmount > 0) {
+                            ItemStack partial = invItem.clone();
+                            partial.setAmount(dropAmount);
+                            savedContents[i] = partial;
+                            initialDrops.remove(j);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        
+        // Put remaining unmapped drops into first available empty slots
+        for (ItemStack leftover : initialDrops) {
+            if (leftover == null || leftover.getType() == Material.AIR) continue;
+            for (int i = 0; i < savedContents.length; i++) {
+                if (savedContents[i] == null) {
+                    savedContents[i] = leftover.clone();
+                    break;
+                }
+            }
+        }
         Location deathLoc = player.getLocation();
         World world = player.getWorld();
 
@@ -89,7 +128,7 @@ public class DeathListener implements Listener {
             long expireTime = System.currentTimeMillis() + plugin.getChestDurationMillis();
             
             com.example.aegischest.AegisChestData data = new com.example.aegischest.AegisChestData(
-                    newId, player.getUniqueId(), player.getName(), block.getLocation(), expireTime, timerHologram, nameHologram, drops, 0);
+                    newId, player.getUniqueId(), player.getName(), block.getLocation(), expireTime, timerHologram, nameHologram, savedContents, 0);
             
             // Save TOTAL XP (only do this after chest data is created to ensure we can store it)
             int totalXp = calculateTotalExperience(player);
@@ -102,7 +141,7 @@ public class DeathListener implements Listener {
             
             // Update chest data with XP
             com.example.aegischest.AegisChestData finalData = new com.example.aegischest.AegisChestData(
-                    newId, player.getUniqueId(), player.getName(), block.getLocation(), expireTime, timerHologram, nameHologram, drops, totalXp);
+                    newId, player.getUniqueId(), player.getName(), block.getLocation(), expireTime, timerHologram, nameHologram, savedContents, totalXp);
 
             playerChests.add(finalData);
 

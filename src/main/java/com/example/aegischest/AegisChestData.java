@@ -13,10 +13,10 @@ public class AegisChestData {
     private final long expireTime;
     private ArmorStand timerHologram;
     private ArmorStand nameHologram;
-    private final java.util.List<org.bukkit.inventory.ItemStack> items;
+    private final org.bukkit.inventory.ItemStack[] items;
     private final int xp;
 
-    public AegisChestData(int chestId, UUID owner, String ownerName, Location location, long expireTime, ArmorStand timerHologram, ArmorStand nameHologram, java.util.List<org.bukkit.inventory.ItemStack> items, int xp) {
+    public AegisChestData(int chestId, UUID owner, String ownerName, Location location, long expireTime, ArmorStand timerHologram, ArmorStand nameHologram, org.bukkit.inventory.ItemStack[] items, int xp) {
         this.chestId = chestId;
         this.owner = owner;
         this.ownerName = ownerName;
@@ -68,7 +68,7 @@ public class AegisChestData {
         this.nameHologram = nameHologram;
     }
 
-    public java.util.List<org.bukkit.inventory.ItemStack> getItems() {
+    public org.bukkit.inventory.ItemStack[] getItems() {
         return items;
     }
 

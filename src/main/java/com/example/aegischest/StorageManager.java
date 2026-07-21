@@ -52,7 +52,24 @@ public class StorageManager {
                     double z = chestsConfig.getDouble(path + ".location.z");
                     Location loc = new Location(world, x, y, z);
                     
-                    List<ItemStack> items = (List<ItemStack>) chestsConfig.getList(path + ".items");
+                    ItemStack[] items = new ItemStack[41];
+                    if (chestsConfig.isConfigurationSection(path + ".items")) {
+                        for (String slotStr : chestsConfig.getConfigurationSection(path + ".items").getKeys(false)) {
+                            try {
+                                int slot = Integer.parseInt(slotStr);
+                                if (slot >= 0 && slot < items.length) {
+                                    items[slot] = chestsConfig.getItemStack(path + ".items." + slotStr);
+                                }
+                            } catch (NumberFormatException ignored) {}
+                        }
+                    } else if (chestsConfig.isList(path + ".items")) {
+                        List<ItemStack> list = (List<ItemStack>) chestsConfig.getList(path + ".items");
+                        if (list != null) {
+                            for (int i = 0; i < list.size() && i < items.length; i++) {
+                                items[i] = list.get(i);
+                            }
+                        }
+                    }
 
                     // Respawn hologram (name layer)
                     Location nameHoloLoc = loc.clone().add(0.5, 1.2, 0.5);
@@ -104,7 +121,24 @@ public class StorageManager {
                     double z = chestsConfig.getDouble(path + ".location.z");
                     Location loc = new Location(world, x, y, z);
                     
-                    List<ItemStack> items = (List<ItemStack>) chestsConfig.getList(path + ".items");
+                    ItemStack[] items = new ItemStack[41];
+                    if (chestsConfig.isConfigurationSection(path + ".items")) {
+                        for (String slotStr : chestsConfig.getConfigurationSection(path + ".items").getKeys(false)) {
+                            try {
+                                int slot = Integer.parseInt(slotStr);
+                                if (slot >= 0 && slot < items.length) {
+                                    items[slot] = chestsConfig.getItemStack(path + ".items." + slotStr);
+                                }
+                            } catch (NumberFormatException ignored) {}
+                        }
+                    } else if (chestsConfig.isList(path + ".items")) {
+                        List<ItemStack> list = (List<ItemStack>) chestsConfig.getList(path + ".items");
+                        if (list != null) {
+                            for (int i = 0; i < list.size() && i < items.length; i++) {
+                                items[i] = list.get(i);
+                            }
+                        }
+                    }
 
                     AegisChestData chest = new AegisChestData(chestId, ownerUuid, ownerName, loc, expireTime, null, null, items, xp);
                     playerChests.add(chest);
@@ -147,7 +181,13 @@ public class StorageManager {
                 chestsConfig.set(path + ".location.y", loc.getY());
                 chestsConfig.set(path + ".location.z", loc.getZ());
                 
-                chestsConfig.set(path + ".items", chest.getItems());
+                if (chest.getItems() != null) {
+                    for (int i = 0; i < chest.getItems().length; i++) {
+                        if (chest.getItems()[i] != null) {
+                            chestsConfig.set(path + ".items." + i, chest.getItems()[i]);
+                        }
+                    }
+                }
                 
                 // Cleanup hologram properly on shutdown
                 if (chest.getTimerHologram() != null) {
@@ -174,7 +214,13 @@ public class StorageManager {
                 chestsConfig.set(path + ".location.y", loc.getY());
                 chestsConfig.set(path + ".location.z", loc.getZ());
                 
-                chestsConfig.set(path + ".items", chest.getItems());
+                if (chest.getItems() != null) {
+                    for (int i = 0; i < chest.getItems().length; i++) {
+                        if (chest.getItems()[i] != null) {
+                            chestsConfig.set(path + ".items." + i, chest.getItems()[i]);
+                        }
+                    }
+                }
             }
         }
 

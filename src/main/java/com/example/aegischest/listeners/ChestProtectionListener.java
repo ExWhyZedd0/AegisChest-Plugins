@@ -61,7 +61,11 @@ public class ChestProtectionListener implements Listener {
 
             // Loot items
             if (chestData.getItems() != null) {
-                for (org.bukkit.inventory.ItemStack item : chestData.getItems()) {
+                org.bukkit.inventory.ItemStack[] savedContents = chestData.getItems();
+                org.bukkit.inventory.PlayerInventory inv = player.getInventory();
+                
+                for (int i = 0; i < savedContents.length; i++) {
+                    org.bukkit.inventory.ItemStack item = savedContents[i];
                     if (item == null || item.getType() == org.bukkit.Material.AIR) continue;
                     
                     // Try auto equip armor
@@ -71,12 +75,21 @@ public class ChestProtectionListener implements Listener {
                         }
                     }
 
-                    // Try add to inventory
-                    java.util.HashMap<Integer, org.bukkit.inventory.ItemStack> leftovers = player.getInventory().addItem(item);
-                    
-                    // Drop leftovers on the ground if inventory is full
-                    for (org.bukkit.inventory.ItemStack leftover : leftovers.values()) {
-                        player.getWorld().dropItemNaturally(player.getLocation(), leftover);
+                    // Try to put it exactly in its original slot
+                    org.bukkit.inventory.ItemStack existing = null;
+                    if (i < 41) { // Normal inventory bounds
+                        existing = inv.getItem(i);
+                    }
+
+                    if (i < 41 && (existing == null || existing.getType() == org.bukkit.Material.AIR)) {
+                        inv.setItem(i, item);
+                    } else {
+                        // Slot is taken, or it's an overflow item (i >= 41)
+                        java.util.HashMap<Integer, org.bukkit.inventory.ItemStack> leftovers = inv.addItem(item);
+                        // Drop leftovers on the ground if inventory is full
+                        for (org.bukkit.inventory.ItemStack leftover : leftovers.values()) {
+                            player.getWorld().dropItemNaturally(player.getLocation(), leftover);
+                        }
                     }
                 }
             }
@@ -164,7 +177,8 @@ public class ChestProtectionListener implements Listener {
                 } else {
                     // The owner (or OP) broke it, drop virtual contents naturally
                     if (chestData.getItems() != null) {
-                        for (org.bukkit.inventory.ItemStack item : chestData.getItems()) {
+                        for (int i = 0; i < chestData.getItems().length; i++) {
+                            org.bukkit.inventory.ItemStack item = chestData.getItems()[i];
                             if (item != null && item.getType() != org.bukkit.Material.AIR) {
                                 block.getWorld().dropItemNaturally(block.getLocation(), item);
                             }

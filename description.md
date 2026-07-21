@@ -5,6 +5,7 @@ AegisChest is a lightweight, reliable, and user-friendly PaperMC plugin that sav
 ## ✨ Features
 
 - **Item & XP Protection**: All items and experience points are safely stored inside a marker (defaults to the dying player's head) at the exact death location.
+- **Exact Slot Memory**: AegisChest flawlessly memorizes exactly which inventory slot each item belonged to. When you retrieve your chest, every item is injected right back into its precise original slot!
 - **Holograms**: Spawns a two-layer hologram above the chest displaying the owner's name and a live, blue countdown timer.
 - **Timed Expiry**: AegisChests automatically expire after a configurable duration (default: 1 hour). If they expire, they are securely stored in an Admin Recovery Vault instead of despawning on the ground.
 - **Secure**: Other players cannot open, break, or interact with an AegisChest that doesn't belong to them (bypassed by server operators).
@@ -15,7 +16,7 @@ AegisChest is a lightweight, reliable, and user-friendly PaperMC plugin that sav
 - **Highly Configurable**: Customize messages, chest duration, and the marker type (e.g., `PLAYER_HEAD` or `CHEST`) directly from the configuration file.
 - **Admin Recovery**: Recover expired chests with ease using `/ac recover <player>` so items are never truly lost to time.
 
-## 🚀 Installation
+## 📥 Installation
 
 1. Download the latest `AegisChest-1.0.2.jar` release.
 2. Drop the `.jar` file into your server's `plugins/` directory.
@@ -50,7 +51,7 @@ messages:
 
 *Alias:* `/ac` can be used instead of `/aegischest`.
 
-## 🔐 Permissions
+## 🛡️ Permissions
 
 *Currently, AegisChest works out-of-the-box for all players. Server operators (OPs) have the bypass ability to open or break any AegisChest. Admins require `aegischest.admin` to use the `/ac recover` command.*
 
@@ -65,5 +66,5 @@ cd AegisChest
 ```
 The compiled JAR will be located in `build/libs/`.
 
-## 📄 License
+## 📜 License
 This project is open-source and available for customization.
